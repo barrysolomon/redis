@@ -1,0 +1,24 @@
+{
+  "name": "bds-redis",
+  "version": "1.0.21",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "cpln-image-new": "cpln image build --push --name $npm_package_name:$npm_package_version --org initech && npm version patch",
+    "cpln-image-workload-new": "cpln image build --push --org initech --name $npm_package_name:$npm_package_version && cpln workload create --name $npm_package_name-dev --image //image/$npm_package_name:$npm_package_version --public --org initech --gvc bds-dev && npm version patch",
+    "cpln-image-workload-update": "cpln image build --push --org initech --name $npm_package_name:$npm_package_version && cpln workload update $npm_package_name-dev --set spec.containers.$npm_package_name.image=//image/$npm_package_name:$npm_package_version  --org initech --gvc bds-dev",
+    "cpln-workload-update": "cpln workload update bds-dynamodb-dev --org initech --set spec.containers.$npm_package_name.image=$npm_package_name:$npm_package_version --gvc bds-dev",
+    "cpln-workload-delete": "cpln workload delete $npm_package_name-dev --org initech --gvc bds-dev",
+    "cpln-workload-redeploy": "cpln workload force-redeployment bds-dynamodb-dev --org initech --gvc bds-dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Barry Solomon",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1309.0",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "redis": "^4.6.4"
+  }
+}
